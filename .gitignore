@@ -1,0 +1,6 @@
+# Local preview artifacts
+.preview/
+
+# OS files
+.DS_Store
+Thumbs.db

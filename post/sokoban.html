@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>经典推箱子 — HazeNoTea</title>
+  <meta name="description" content="经典推箱子：100 个精选关卡和地图编辑器，让小屏幕也能烧脑解谜。">
+  <meta name="author" content="HazeNoTea">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f4f0e8" id="theme-color">
+  <link rel="icon" type="image/png" href="../common/logo.png">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/post.css">
+  <script>
+    (function () {
+      var theme = "light";
+      var queryTheme = new URLSearchParams(window.location.search).get("theme");
+      if (queryTheme === "light" || queryTheme === "dark") {
+        theme = queryTheme;
+      } else {
+        try {
+          var saved = localStorage.getItem("hnt-theme");
+          theme = saved || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        } catch (error) {
+          theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+      }
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.classList.add("js");
+    })();
+  </script>
+</head>
+<body class="post-page">
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <div class="page-grain" aria-hidden="true"></div>
+
+  <header class="site-header post-site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html" aria-label="HNT，返回首页">
+        <span class="brand-mark" aria-hidden="true">H</span>
+        <span class="brand-text">
+          <strong>HNT</strong>
+          <small>PROJECT INDEX</small>
+        </span>
+      </a>
+      <a class="post-back" href="../index.html#work"><span aria-hidden="true">←</span> 返回项目</a>
+      <div class="header-actions">
+        <button class="icon-button theme-toggle" id="theme-toggle" type="button" aria-label="切换深色模式" aria-pressed="false">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"></path>
+          </svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <article>
+      <header class="post-hero container" data-reveal>
+        <p class="post-kicker"><span>02</span> PROJECT NOTE / WATCH GAME</p>
+        <div class="post-heading">
+          <div class="post-title-row">
+            <div class="post-logo">
+              <img src="../common/post/推箱子/高清logo.png" width="400" height="400" alt="经典推箱子图标">
+            </div>
+            <h1>经典推箱子 <span>100 个关卡，和一个地图编辑器。</span></h1>
+          </div>
+        </div>
+        <p class="post-summary">把箱子推到目标点。简单的规则，足够多的关卡，还可以自己动手画一张地图。</p>
+        <dl class="post-meta">
+          <div><dt>平台</dt><dd>Vela / 手环</dd></div>
+          <div><dt>类型</dt><dd>解谜</dd></div>
+          <div><dt>关卡</dt><dd>100 个</dd></div>
+        </dl>
+      </header>
+
+      <figure class="post-cover container" data-reveal>
+        <img src="../common/post/推箱子/大图.png" width="1200" height="800" alt="经典推箱子宣传图，角色正在推动一个黄色箱子">
+      </figure>
+
+      <div class="post-content">
+        <section class="post-section" data-reveal>
+          <p class="post-lead">推箱子是我很喜欢的一类解谜游戏：规则一眼就能看懂，但每一步都需要想清楚。把它装进手环之后，关卡变得更短，思考却一点没少。</p>
+          <p class="post-copy">从轻松上手的前几关，到需要反复推演的后期地图，一共收录了 100 个精选关卡。卡住的时候可以退一步重来，想挑战自己的时候，也可以打开编辑器做一张新地图。</p>
+
+          <div class="post-features">
+            <div class="post-feature">
+              <span class="post-feature-index">01</span>
+              <h3>100 个精选关卡</h3>
+              <p>从入门到烧脑，关卡数量随着版本一路增加，最后停在 100 关。</p>
+            </div>
+            <div class="post-feature">
+              <span class="post-feature-index">02</span>
+              <h3>地图编辑器</h3>
+              <p>在 8×8 的格子里摆墙、地面、玩家、箱子和目标，自己设计一关。</p>
+            </div>
+            <div class="post-feature">
+              <span class="post-feature-index">03</span>
+              <h3>手环适配</h3>
+              <p>适配米环 9 与 9 Pro，图标和动画也针对小屏幕做过调整。</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="post-section" data-reveal>
+          <h2>从第一关到第一百关</h2>
+          <ul class="post-list">
+            <li>v1.3.0 新增地图编辑器，适配米环 9 Pro</li>
+            <li>v1.4.0 适配米环 9，新增 10 个关卡</li>
+            <li>v1.5.0 新增 10 个关卡，共 90 个</li>
+            <li>v1.6.0 再新增 10 个关卡，共 100 个</li>
+          </ul>
+        </section>
+
+        <section class="post-section" data-reveal>
+          <h2>画面</h2>
+          <div class="post-gallery post-gallery--feature">
+            <figure>
+              <a href="../common/post/推箱子/宣传图.png" target="_blank" rel="noopener noreferrer">
+                <img src="../common/post/推箱子/宣传图.png" width="2048" height="1152" alt="推箱子的关卡画面和游戏介绍" loading="lazy" decoding="async">
+              </a>
+              <figcaption>简约不失精致，精选 100 关卡 / 点击查看原图</figcaption>
+            </figure>
+            <figure>
+              <a href="../common/post/推箱子/宣传图_2.png" target="_blank" rel="noopener noreferrer">
+                <img src="../common/post/推箱子/宣传图_2.png" width="1200" height="675" alt="推箱子的地图编辑器界面" loading="lazy" decoding="async">
+              </a>
+              <figcaption>地图编辑器 / 自定义地图</figcaption>
+            </figure>
+            <figure>
+              <a href="../common/post/推箱子/宣传图_3.png" target="_blank" rel="noopener noreferrer">
+                <img src="../common/post/推箱子/宣传图_3.png" width="1200" height="675" alt="推箱子多个版本的更新说明" loading="lazy" decoding="async">
+              </a>
+              <figcaption>版本记录 / 一路更新到 100 关</figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <aside class="post-note" data-reveal>
+          <span aria-hidden="true">✳</span>
+          <p><strong>说明：</strong>本作品运行于 Vela / 手环端，网页仅作作品记录，不提供在线试玩。</p>
+        </aside>
+
+        <nav class="post-nav" aria-label="作品导航" data-reveal>
+          <a href="./hnt-gamebox.html">← HNT 游戏盒</a>
+          <span>02 / 04</span>
+          <a href="./sky-chess.html">天空棋盒 →</a>
+        </nav>
+      </div>
+    </article>
+  </main>
+
+  <footer class="post-footer">
+    <div class="container post-footer-inner">
+      <p>© <span id="year">2026</span> HazeNoTea. HNT / 作品索引.</p>
+      <a href="../index.html#top">回到首页 <span aria-hidden="true">↑</span></a>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js" defer></script>
+</body>
+</html>

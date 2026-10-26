@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>天空牌盒 — HazeNoTea</title>
+  <meta name="description" content="天空牌盒：斗地主、蜘蛛纸牌、UNO，三种经典牌类玩法装进手环，内置人机对手。">
+  <meta name="author" content="HazeNoTea">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f4f0e8" id="theme-color">
+  <link rel="icon" type="image/png" href="../common/logo.png">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/post.css">
+  <script>
+    (function () {
+      var theme = "light";
+      var queryTheme = new URLSearchParams(window.location.search).get("theme");
+      if (queryTheme === "light" || queryTheme === "dark") {
+        theme = queryTheme;
+      } else {
+        try {
+          var saved = localStorage.getItem("hnt-theme");
+          theme = saved || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        } catch (error) {
+          theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+      }
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.classList.add("js");
+    })();
+  </script>
+</head>
+<body class="post-page">
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <div class="page-grain" aria-hidden="true"></div>
+
+  <header class="site-header post-site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html" aria-label="HNT，返回首页">
+        <span class="brand-mark" aria-hidden="true">H</span>
+        <span class="brand-text">
+          <strong>HNT</strong>
+          <small>PROJECT INDEX</small>
+        </span>
+      </a>
+      <a class="post-back" href="../index.html#work"><span aria-hidden="true">←</span> 返回项目</a>
+      <div class="header-actions">
+        <button class="icon-button theme-toggle" id="theme-toggle" type="button" aria-label="切换深色模式" aria-pressed="false">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"></path>
+          </svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <article>
+      <header class="post-hero container" data-reveal>
+        <p class="post-kicker"><span>04</span> PROJECT NOTE / WATCH GAME</p>
+        <div class="post-heading">
+          <div class="post-title-row">
+            <div class="post-logo">
+              <img src="../common/post/天空牌盒/高清logo.png" width="500" height="500" alt="天空牌盒图标">
+            </div>
+            <h1>天空牌盒 <span>斗地主、蜘蛛纸牌、UNO，一副腕上牌桌。</span></h1>
+          </div>
+        </div>
+        <p class="post-summary">三种经典牌类玩法，内置人机。一个人也能打上一局，等人时不再无聊。</p>
+        <dl class="post-meta">
+          <div><dt>平台</dt><dd>Vela / 手环</dd></div>
+          <div><dt>类型</dt><dd>卡牌合集</dd></div>
+          <div><dt>模式</dt><dd>单人 / 人机</dd></div>
+        </dl>
+      </header>
+
+      <figure class="post-cover container" data-reveal>
+        <img src="../common/post/天空牌盒/宣传图_2.png" width="1200" height="800" alt="天空牌盒宣传图，展示斗地主对局与出牌界面">
+      </figure>
+
+      <div class="post-content">
+        <section class="post-section" data-reveal>
+          <p class="post-lead">把纸牌塞进手环，最难的不是规则，而是怎么在一小块屏幕上把牌看明白、点准确。天空牌盒把三种玩法做成了适合抬腕操作的牌桌。</p>
+          <p class="post-copy">同一套牌桌界面下，可以选择慢一点的蜘蛛纸牌，也可以来一局需要思考的斗地主，或者开一桌 UNO。人机对手不是摆设，想赢还是得认真出牌。</p>
+
+          <div class="post-features">
+            <div class="post-feature">
+              <span class="post-feature-index">01</span>
+              <h3>三种玩法</h3>
+              <p>斗地主、蜘蛛纸牌、UNO，想玩哪一种直接切换。</p>
+            </div>
+            <div class="post-feature">
+              <span class="post-feature-index">02</span>
+              <h3>内置人机</h3>
+              <p>斗地主带高难人机，蜘蛛纸牌支持存档，UNO 支持 2–3 人对战。</p>
+            </div>
+            <div class="post-feature">
+              <span class="post-feature-index">03</span>
+              <h3>为手环重排的牌桌</h3>
+              <p>手牌、出牌区和菜单都针对小屏重新布局，减少误触。</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="post-section" data-reveal>
+          <h2>玩法</h2>
+          <ul class="post-list">
+            <li>斗地主 · 人机对战，高难度 AI</li>
+            <li>蜘蛛纸牌 · 单人 / 多花色，支持存档</li>
+            <li>UNO · 2–3 人对战</li>
+          </ul>
+        </section>
+
+        <section class="post-section" data-reveal>
+          <h2>画面</h2>
+          <div class="post-gallery">
+            <figure>
+              <a href="../common/post/天空牌盒/宣传图_1.png" target="_blank" rel="noopener noreferrer">
+                <img src="../common/post/天空牌盒/宣传图_1.png" width="900" height="600" alt="天空牌盒的模式选择界面" loading="lazy" decoding="async">
+              </a>
+              <figcaption>模式选择 / 斗地主、蜘蛛纸牌、UNO</figcaption>
+            </figure>
+            <figure>
+              <a href="../common/post/天空牌盒/大图.png" target="_blank" rel="noopener noreferrer">
+                <img src="../common/post/天空牌盒/大图.png" width="600" height="400" alt="天空牌盒的扑克牌主界面" loading="lazy" decoding="async">
+              </a>
+              <figcaption>牌桌 / 云层与扑克牌</figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <aside class="post-note" data-reveal>
+          <span aria-hidden="true">✳</span>
+          <p><strong>说明：</strong>本作品运行于 Vela / 手环端，网页仅作作品记录，不提供在线试玩。</p>
+        </aside>
+
+        <nav class="post-nav" aria-label="作品导航" data-reveal>
+          <a href="./sky-chess.html">← 天空棋盒</a>
+          <span>04 / 04</span>
+          <a href="../index.html#work">全部项目 →</a>
+        </nav>
+      </div>
+    </article>
+  </main>
+
+  <footer class="post-footer">
+    <div class="container post-footer-inner">
+      <p>© <span id="year">2026</span> HazeNoTea. HNT / 作品索引.</p>
+      <a href="../index.html#top">回到首页 <span aria-hidden="true">↑</span></a>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js" defer></script>
+</body>
+</html>

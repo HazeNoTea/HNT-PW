@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">HTML 工具箱</title>
+  <desc id="desc">深色界面上写着 HTML 工具箱，旁边是一个纯前端工具面板。</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#15212a"/>
+      <stop offset="0.55" stop-color="#1b2830"/>
+      <stop offset="1" stop-color="#111a20"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#d94a31" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#d94a31" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" fill="none" stroke="#f4f0e8" stroke-opacity="0.06"/>
+    </pattern>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="22" stdDeviation="22" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <rect width="1200" height="800" fill="url(#grid)"/>
+  <circle cx="975" cy="118" r="330" fill="url(#glow)"/>
+
+  <g font-family="Consolas, 'Cascadia Mono', 'Courier New', monospace">
+    <text x="70" y="84" fill="#f4f0e8" fill-opacity="0.52" font-size="17" letter-spacing="4">HNT / TOOLBOX 06</text>
+    <text x="74" y="344" fill="#f4f0e8" font-family="Georgia, 'Times New Roman', serif" font-size="188" font-weight="700" letter-spacing="-10">HTML</text>
+    <text x="80" y="426" fill="#f4f0e8" font-family="'Microsoft YaHei', 'PingFang SC', sans-serif" font-size="60" font-weight="700" letter-spacing="8">工具箱</text>
+    <text x="84" y="492" fill="#f4f0e8" fill-opacity="0.63" font-family="'Microsoft YaHei', 'PingFang SC', sans-serif" font-size="22" letter-spacing="1">把日常需要的小工具，做成一个纯前端集合。</text>
+  </g>
+
+  <g transform="translate(754 154) rotate(2.5)" filter="url(#shadow)">
+    <rect width="354" height="478" rx="24" fill="#f3ede2"/>
+    <rect x="20" y="20" width="314" height="46" rx="9" fill="#e5dccc"/>
+    <circle cx="40" cy="43" r="5" fill="#d94a31"/>
+    <circle cx="58" cy="43" r="5" fill="#d2b36e"/>
+    <circle cx="76" cy="43" r="5" fill="#8ca57e"/>
+    <text x="102" y="49" fill="#70685c" font-family="Consolas, monospace" font-size="12">tools.html</text>
+
+    <g font-family="Consolas, 'Cascadia Mono', monospace" font-size="20" fill="#26343a">
+      <text x="34" y="120" fill="#a45d43">&lt;div</text>
+      <text x="102" y="120" fill="#6f7f63">class=</text>
+      <text x="170" y="120" fill="#9b4a34">"toolbox"</text>
+      <text x="270" y="120" fill="#a45d43">&gt;</text>
+      <text x="56" y="158" fill="#67776a">&lt;tool</text>
+      <text x="124" y="158" fill="#9b4a34">name=</text>
+      <text x="190" y="158" fill="#5d5145">"json"</text>
+      <text x="260" y="158" fill="#67776a">/&gt;</text>
+      <text x="56" y="196" fill="#67776a">&lt;tool</text>
+      <text x="124" y="196" fill="#9b4a34">name=</text>
+      <text x="190" y="196" fill="#5d5145">"base64"</text>
+      <text x="292" y="196" fill="#67776a">/&gt;</text>
+      <text x="56" y="234" fill="#67776a">&lt;tool</text>
+      <text x="124" y="234" fill="#9b4a34">name=</text>
+      <text x="190" y="234" fill="#5d5145">"regex"</text>
+      <text x="278" y="234" fill="#67776a">/&gt;</text>
+      <text x="34" y="272" fill="#a45d43">&lt;/div&gt;</text>
+    </g>
+
+    <line x1="30" y1="300" x2="324" y2="300" stroke="#d7ccbb"/>
+    <text x="34" y="332" fill="#8b8173" font-family="Consolas, monospace" font-size="11" letter-spacing="2">AVAILABLE TOOLS</text>
+
+    <g font-family="'Microsoft YaHei', 'PingFang SC', sans-serif" font-size="15" fill="#f3ede2">
+      <g>
+        <rect x="30" y="350" width="86" height="38" rx="19" fill="#26343a"/>
+        <text x="56" y="374">JSON</text>
+      </g>
+      <g>
+        <rect x="126" y="350" width="96" height="38" rx="19" fill="#d94a31"/>
+        <text x="147" y="374">BASE64</text>
+      </g>
+      <g>
+        <rect x="232" y="350" width="92" height="38" rx="19" fill="#8ca57e"/>
+        <text x="253" y="374" fill="#172027">REGEX</text>
+      </g>
+      <g>
+        <rect x="30" y="398" width="132" height="38" rx="19" fill="#e5dccc"/>
+        <text x="53" y="422" fill="#26343a">TIMESTAMP</text>
+      </g>
+      <g>
+        <rect x="172" y="398" width="80" height="38" rx="19" fill="#26343a"/>
+        <text x="192" y="422">URL</text>
+      </g>
+    </g>
+  </g>
+
+  <g fill="#f4f0e8" fill-opacity="0.42" font-family="Consolas, monospace" font-size="13" letter-spacing="2">
+    <text x="72" y="719">HTML / CSS / JAVASCRIPT</text>
+    <text x="1128" y="719" text-anchor="end">HAZENOTEA.GITHUB.IO</text>
+  </g>
+  <path d="M72 682H382" stroke="#d94a31" stroke-width="3" stroke-linecap="round"/>
+</svg>
