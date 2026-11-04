@@ -55,9 +55,10 @@
 
     <div id="formArea">
         <label>设备码（手环上显示）</label>
-        <input id="deviceCode" type="text" placeholder="例如 1A2B-3D4E-1234-8765"
+        <input id="deviceCode" type="text" placeholder="例如 12345-67890-12345"
                autocomplete="off" maxlength="19" oninput="formatDeviceCode(this)" />
-        <div id="deviceCodeHint" class="field-hint">设备码格式不正确，应为 XXXX-XXXX-XXXX-XXXX</div>
+        <div id="deviceCodeHint" class="field-hint">设备码格式不正确</div>
+        <!-- 新码 15 位数字（5-5-5），旧码 16 位十六进制（4-4-4-4） -->
 
         <label>爱发电订单号</label>
         <input id="orderNo" type="text" placeholder="付款后在订单详情页查看"
@@ -145,40 +146,100 @@ window.addEventListener('DOMContentLoaded', function () {
 });
 
 // ========== 设备码格式化与校验 ==========
-/**
- * 自动格式化设备码：
- *  - 转大写
- *  - 只保留 0-9 和 A-F
- *  - 最多 16 位
- *  - 每 4 位插入一个连字符
- */
-function formatDeviceCode(input) {
-    const raw = input.value.toUpperCase().replace(/[^0-9A-F]/g, '').slice(0, 16);
-    let formatted = '';
-    for (let i = 0; i < raw.length; i++) {
-        if (i > 0 && i % 4 === 0) formatted += '-';
-        formatted += raw[i];
-    }
-    input.value = formatted;
+// v2 新码：15 位纯数字 = 14 位数据 + 1 位 Damm 校验，展示 5-5-5
+// v1 旧码：16 位十六进制，展示 4-4-4-4
+const DEVICE_DAMM = [
+    [0, 3, 1, 7, 5, 9, 8, 6, 4, 2],
+    [7, 0, 9, 2, 1, 5, 4, 8, 6, 3],
+    [4, 2, 0, 6, 8, 7, 1, 3, 5, 9],
+    [1, 7, 5, 0, 9, 8, 3, 4, 2, 6],
+    [6, 1, 2, 3, 0, 4, 5, 9, 7, 8],
+    [3, 6, 7, 4, 2, 0, 9, 5, 8, 1],
+    [5, 8, 6, 9, 7, 2, 0, 1, 3, 4],
+    [8, 9, 4, 5, 3, 6, 2, 0, 1, 7],
+    [9, 4, 3, 8, 6, 1, 7, 2, 0, 5],
+    [2, 5, 8, 1, 4, 3, 6, 7, 9, 0],
+];
+const DEVICE_CODE_HINT = '设备码格式不正确';
+// 新码 15 位数字（5-5-5），旧码 16 位十六进制（4-4-4-4）
 
-    // 实时反馈：完整且合法显示绿色，不完整显示中性，非法字符已被过滤
-    const hint = document.getElementById('deviceCodeHint');
-    if (formatted.length === 19) {
-        input.classList.remove('invalid');
-        input.classList.add('valid');
-        hint.classList.remove('show');
-    } else {
-        input.classList.remove('valid');
-        input.classList.remove('invalid');
-        hint.classList.remove('show');
+function dammValidate(code) {
+    let interim = 0;
+    for (let i = 0; i < code.length; i++) {
+        const d = code.charCodeAt(i) - 48;
+        if (d < 0 || d > 9) return false;
+        interim = DEVICE_DAMM[interim][d];
     }
+    return interim === 0;
+}
+
+function groupCode(code, size) {
+    let out = '';
+    for (let i = 0; i < code.length; i++) {
+        if (i > 0 && i % size === 0) out += '-';
+        out += code[i];
+    }
+    return out;
 }
 
 /**
- * 校验设备码是否符合 XXXX-XXXX-XXXX-XXXX 格式
+ * 解析设备码。
+ * 返回 { version, code, display } 或 null
+ *   code 是去掉连字符的原始数字/hex，直接发给后端
  */
-function isValidDeviceCode(code) {
-    return /^[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}$/.test(code);
+function parseDeviceCode(raw) {
+    const s = (raw || '').toUpperCase().replace(/[\s-]/g, '');
+    if (/^\d{15}$/.test(s)) {
+        if (!dammValidate(s)) return null;
+        return { version: 'v2', code: s, display: groupCode(s, 5) };
+    }
+    if (/^[0-9A-F]{16}$/.test(s)) {
+        return { version: 'v1', code: s, display: groupCode(s, 4) };
+    }
+    return null;
+}
+
+/**
+ * 自动格式化设备码：
+ *  - 转大写、只保留 0-9/A-F
+ *  - 完整的新码（15 位数字）→ 5-5-5
+ *  - 完整的旧码（16 位 hex）→ 4-4-4-4
+ *  - 输入过程中不强行插连字符，避免 15/16 位判断来回跳
+ */
+function formatDeviceCode(input) {
+    const raw = input.value.toUpperCase().replace(/[^0-9A-F]/g, '').slice(0, 16);
+    let formatted = raw;
+    let complete = false;
+    let valid = false;
+
+    if (/^\d{15}$/.test(raw)) {
+        complete = true;
+        valid = dammValidate(raw);
+        formatted = groupCode(raw, 5);
+    } else if (/^[0-9A-F]{16}$/.test(raw)) {
+        complete = true;
+        valid = true;
+        formatted = groupCode(raw, 4);
+    }
+
+    input.value = formatted;
+
+    const hint = document.getElementById('deviceCodeHint');
+    if (complete && valid) {
+        input.classList.remove('invalid');
+        input.classList.add('valid');
+        hint.classList.remove('show');
+    } else if (complete && !valid) {
+        input.classList.add('invalid');
+        input.classList.remove('valid');
+        hint.textContent = '新设备码校验位不正确，请核对最后一位';
+        hint.classList.add('show');
+    } else {
+        input.classList.remove('valid');
+        input.classList.remove('invalid');
+        hint.textContent = DEVICE_CODE_HINT;
+        hint.classList.remove('show');
+    }
 }
 
 // ========== 订单号校验 ==========
@@ -224,16 +285,18 @@ async function activate() {
     deviceCodeHint.classList.remove('show');
     orderNoHint.classList.remove('show');
 
-    // ---- 设备码校验 ----
+    // ---- 设备码校验（15 位新码 / 16 位旧码） ----
     if (!deviceCode) {
         showResult('请输入设备码', 'error');
         deviceCodeInput.classList.add('invalid');
         return;
     }
-    if (!isValidDeviceCode(deviceCode)) {
+    const parsed = parseDeviceCode(deviceCode);
+    if (!parsed) {
         deviceCodeInput.classList.add('invalid');
+        deviceCodeHint.textContent = DEVICE_CODE_HINT;
         deviceCodeHint.classList.add('show');
-        showResult('设备码格式不正确，应为 XXXX-XXXX-XXXX-XXXX', 'error');
+        showResult('设备码格式或校验位不正确：新码 15 位数字，旧码 16 位十六进制', 'error');
         return;
     }
 
@@ -265,7 +328,7 @@ async function activate() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                device_code: deviceCode,
+                device_code: parsed.code,
                 out_trade_no: orderNo,
                 game_id: GAME_ID
             })
