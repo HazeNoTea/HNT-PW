@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
   游戏激活页，不放入站内导航。
-  使用方式：activate.html?game=com.hazenotea.pvz.watch
+  使用方式：activate.html?game=com.hazenotea.ashenoath.watch
   支持的游戏 ID 见下方 ALLOWED_GAMES。
 -->
 <html lang="zh-CN">
@@ -95,6 +95,7 @@ const API_URL = 'https://1492152119-gpz7bvmw8n.ap-guangzhou.tencentscf.com/api/a
 // 允许的游戏白名单（仅用于前端友好提示，真正的校验在后端）
 const ALLOWED_GAMES = [
     'com.hazenotea.pvz.watch',
+    'com.hazenotea.ashenoath.watch',
     'com.hazenotea.hntgamebox'
 ];
 
@@ -296,7 +297,8 @@ async function activate() {
         deviceCodeInput.classList.add('invalid');
         deviceCodeHint.textContent = DEVICE_CODE_HINT;
         deviceCodeHint.classList.add('show');
-        showResult('设备码格式或校验位不正确：新码 15 位数字，旧码 16 位十六进制', 'error');
+        showResult('设备码错误，请仔细检查是否和手环/手表上的一致', 'error');
+        // ：新码 15 位数字，旧码 16 位十六进制
         return;
     }
 

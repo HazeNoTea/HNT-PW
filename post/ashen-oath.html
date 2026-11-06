@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>灰烬誓约 — HazeNoTea</title>
+  <meta name="description" content="《灰烬誓约》Ashen Oath：一款装进手环的像素 RPG。35 张地图、135 件物品、15 种技能与一场从洛丹伦城门开始的旅程。">
+  <meta name="author" content="HazeNoTea">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f4f0e8" id="theme-color">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="灰烬誓约 — HazeNoTea">
+  <meta property="og:description" content="一款装进手环的像素 RPG。探索、收集、锻造与战斗，以及完整的购买激活入口。">
+
+  <link rel="icon" type="image/png" href="../common/logo.png">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/post.css">
+  <link rel="stylesheet" href="../assets/css/ashen-oath.css">
+  <script>
+    (function () {
+      var theme = "light";
+      var queryTheme = new URLSearchParams(window.location.search).get("theme");
+      if (queryTheme === "light" || queryTheme === "dark") {
+        theme = queryTheme;
+      } else {
+        try {
+          var saved = localStorage.getItem("hnt-theme");
+          theme = saved || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        } catch (error) {
+          theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+      }
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.classList.add("js");
+    })();
+  </script>
+</head>
+<body class="post-page">
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <div class="page-grain" aria-hidden="true"></div>
+
+  <header class="site-header post-site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html" aria-label="HNT，返回首页">
+        <span class="brand-mark" aria-hidden="true">H</span>
+        <span class="brand-text">
+          <strong>HNT</strong>
+          <small>PROJECT INDEX</small>
+        </span>
+      </a>
+      <a class="post-back" href="../index.html#work"><span aria-hidden="true">←</span> 返回项目</a>
+      <div class="header-actions">
+        <button class="icon-button theme-toggle" id="theme-toggle" type="button" aria-label="切换深色模式" aria-pressed="false">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"></path>
+          </svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <article>
+      <header class="post-hero container" data-reveal>
+        <p class="post-kicker"><span>01</span> PROJECT NOTE / PIXEL RPG</p>
+        <div class="post-heading">
+          <div class="post-title-row">
+            <div class="post-logo">
+              <img src="../common/post/灰烬誓约/高清LOGO.png" width="500" height="500" alt="灰烬誓约图标">
+            </div>
+            <h1>灰烬誓约 <span>ASHEN OATH · 探索、收集、锻造、战斗。</span></h1>
+          </div>
+        </div>
+        <p class="post-summary">一款装进手环的像素 RPG。35 张地图、135 件物品、15 种技能，以及一场从洛丹伦城门开始的旅程。</p>
+        <dl class="post-meta">
+          <div><dt>平台</dt><dd>Vela / 手环</dd></div>
+          <div><dt>类型</dt><dd>像素 RPG</dd></div>
+          <!--<div><dt>状态</dt><dd>付费游戏 / 需激活</dd></div>-->
+        </dl>
+
+        <!--<div class="post-actions">
+          <a class="button button--primary" href="../pages/activate/activate.html?game=com.hazenotea.ashenoath.watch" target="_blank" rel="noopener noreferrer">
+            <span>获取解锁码</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+          <a class="text-link" href="./ashen-oath-activation.html">查看激活教程 <span aria-hidden="true">↗</span></a>
+        </div>-->
+      </header>
+
+      <figure class="post-cover container" data-reveal>
+        <img src="../common/post/灰烬誓约/大图.png" width="900" height="600" alt="灰烬誓约宣传图，像素风村庄与游戏标题">
+      </figure>
+
+      <div class="ashen-activation-wrap" data-reveal>
+        <section class="activation-panel" aria-labelledby="activation-title">
+          <p class="activation-panel__eyebrow">ACTIVATION / 购买后解锁</p>
+          <h2 id="activation-title">已购买？<br><span>在这里获取解锁码。</span></h2>
+          <p class="activation-panel__copy">准备爱发电订单号和手环设备码，前往激活页面获取解锁码。第一次激活建议先看图文教程，订单号与设备码都能在对应位置找到。</p>
+          <div class="activation-panel__actions">
+            <a class="button button--primary" href="./ashen-oath-activation.html" target="_blank" rel="noopener noreferrer">
+              <span>图文激活教程</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+            <a class="text-link" href="../pages/activate/activate.html?game=com.hazenotea.ashenoath.watch">获取解锁码<span aria-hidden="true">↗</span></a>
+            <a class="text-link" href="https://afdian.com/a/HazeNoTea" target="_blank" rel="noopener noreferrer">在爱发电购买 <span aria-hidden="true">↗</span></a>
+          </div>
+          <p class="activation-panel__small">设备码请仔细核对。输错需要联系作者人工处理，人工不一定随时在线。</p>
+        </section>
+      </div>
+
+      <div class="post-content">
+        <section class="post-section" data-reveal>
+          <p class="post-lead">《灰烬誓约》是一个装进手环的像素 RPG。世界被压缩进抬腕就能看见的方寸屏幕里，但探索、收集、锻造和战斗一样都没有少。</p>
+          <p class="post-copy">从洛丹伦城门出发，穿过噩梦山谷、提瑞斯法、索利丹农场与巨龙荒地，最后抵达龙憩神殿。一路上会遇到新的敌人、新的材料，也会慢慢学会更多技能，把最初那把剑锻造成真正属于自己的武器。</p>
+          <div class="post-features">
+            <div class="post-feature">
+              <span class="post-feature-index">01</span>
+              <h3>探索 35 张地图</h3>
+              <p>从城镇、农场到雪原与神殿，不同区域有不同的敌人、材料和故事。</p>
+            </div>
+            <div class="post-feature">
+              <span class="post-feature-index">02</span>
+              <h3>收集与锻造</h3>
+              <p>135 件物品、74 种材料、72 条锻造配方，把路上捡到的东西变成装备。</p>
+            </div>
+            <div class="post-feature">
+              <span class="post-feature-index">03</span>
+              <h3>战斗与成长</h3>
+              <p>15 种技能、25 种怪物、23 条主线任务，边打边学，慢慢变强。</p>
+            </div>
+          </div>
+
+          <div class="post-stats" aria-label="游戏内容规模">
+            <div class="post-stat"><strong>35</strong><span>张地图</span></div>
+            <div class="post-stat"><strong>135</strong><span>件物品</span></div>
+            <div class="post-stat"><strong>15</strong><span>种技能</span></div>
+            <div class="post-stat"><strong>25</strong><span>种怪物</span></div>
+            <div class="post-stat"><strong>74</strong><span>种材料</span></div>
+            <div class="post-stat"><strong>72</strong><span>条锻造配方</span></div>
+            <div class="post-stat"><strong>23</strong><span>条主线任务</span></div>
+            <div class="post-stat"><strong>内置</strong><span>图鉴与指南</span></div>
+          </div>
+        </section>
+
+        <section class="post-section" data-reveal>
+          <h2>宣传图</h2>
+          <div class="post-gallery post-gallery--three">
+            <figure>
+              <a href="../common/post/灰烬誓约/宣传图_1.png" target="_blank" rel="noopener noreferrer">
+                <img src="../common/post/灰烬誓约/宣传图_1.png" width="900" height="600" alt="灰烬誓约宣传图，35 张地图与多个区域画面" loading="lazy" decoding="async">
+              </a>
+              <figcaption>35 张地图 / 把世界装进方寸之中</figcaption>
+            </figure>
+            <figure>
+              <a href="../common/post/灰烬誓约/宣传图_2.png" target="_blank" rel="noopener noreferrer">
+                <img src="../common/post/灰烬誓约/宣传图_2.png" width="900" height="600" alt="灰烬誓约游戏画面，地图与技能展示" loading="lazy" decoding="async">
+              </a>
+              <figcaption>地图 / 技能 / 黄昏下的索利丹</figcaption>
+            </figure>
+            <figure>
+              <a href="../common/post/灰烬誓约/宣传图_3.png" target="_blank" rel="noopener noreferrer">
+                <img src="../common/post/灰烬誓约/宣传图_3.png" width="900" height="600" alt="灰烬誓约内容介绍，技能、装备、图鉴与材料界面" loading="lazy" decoding="async">
+              </a>
+              <figcaption>装备 / 技能 / 图鉴与指南</figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <section class="post-section" data-reveal>
+          <h2>游戏画面</h2>
+          <div class="post-gallery post-gallery--screens">
+            <figure>
+              <a href="../common/post/灰烬誓约/screen-01.png" target="_blank" rel="noopener noreferrer">
+                <img src="../common/post/灰烬誓约/screen-01.png" width="336" height="480" alt="灰烬誓约游戏画面，洛丹伦城门外的草地与角色" loading="lazy" decoding="async">
+              </a>
+              <figcaption>耳语海岸 / 探索</figcaption>
+            </figure>
+            <figure>
+              <a href="../common/post/灰烬誓约/screen-02.png" target="_blank" rel="noopener noreferrer">
+                <img src="../common/post/灰烬誓约/screen-02.png" width="336" height="480" alt="灰烬誓约战斗画面，剑刃风暴技能效果" loading="lazy" decoding="async">
+              </a>
+              <figcaption>剑刃风暴 / 战斗</figcaption>
+            </figure>
+            <figure>
+              <a href="../common/post/灰烬誓约/screen-03.png" target="_blank" rel="noopener noreferrer">
+                <img src="../common/post/灰烬誓约/screen-03.png" width="336" height="480" alt="灰烬誓约游戏画面，索利丹农场的黄昏" loading="lazy" decoding="async">
+              </a>
+              <figcaption>索利丹农场 / 黄昏</figcaption>
+            </figure>
+            <figure>
+              <a href="../common/post/灰烬誓约/screen-04.png" target="_blank" rel="noopener noreferrer">
+                <img src="../common/post/灰烬誓约/screen-04.png" width="336" height="480" alt="灰烬誓约游戏画面，橙色的荒野区域" loading="lazy" decoding="async">
+              </a>
+              <figcaption>炉灰庄园 / 荒野</figcaption>
+            </figure>
+            <figure>
+              <a href="../common/post/灰烬誓约/screen-05.png" target="_blank" rel="noopener noreferrer">
+                <img src="../common/post/灰烬誓约/screen-05.png" width="336" height="480" alt="灰烬誓约技能学习界面" loading="lazy" decoding="async">
+              </a>
+              <figcaption>技能学习 / 成长</figcaption>
+            </figure>
+            <figure>
+              <a href="../common/post/灰烬誓约/screen-06.png" target="_blank" rel="noopener noreferrer">
+                <img src="../common/post/灰烬誓约/screen-06.png" width="336" height="480" alt="灰烬誓约图鉴与指南中的物品页面" loading="lazy" decoding="async">
+              </a>
+              <figcaption>图鉴与指南 / 物品</figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <section class="post-section" data-reveal>
+          <h2>购买与激活</h2>
+          <p class="post-copy">《灰烬誓约》为付费游戏。在爱发电购买后，使用订单号与手环设备码获取解锁码，再在手环端输入解锁码即可解锁完整内容。</p>
+          <div class="post-actions">
+            <a class="button button--primary" href="./ashen-oath-activation.html" target="_blank" rel="noopener noreferrer">
+              <span>先看图文教程</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+            <a class="text-link" href="../pages/activate/activate.html?game=com.hazenotea.ashenoath.watch">前往激活 <span aria-hidden="true">↗</span></a>
+          </div>
+        </section>
+
+        <aside class="post-note" data-reveal>
+          <span aria-hidden="true">✳</span>
+          <p><strong>说明：</strong>本作运行于 Vela / 手环端，网页仅作作品介绍与激活入口，不提供在线试玩。</p>
+        </aside>
+
+        <nav class="post-nav" aria-label="作品导航" data-reveal>
+          <a href="../index.html#work">← 全部项目</a>
+          <span>01 / 05</span>
+          <a href="./hnt-gamebox.html">HNT 游戏盒 →</a>
+        </nav>
+      </div>
+    </article>
+  </main>
+
+  <footer class="post-footer">
+    <div class="container post-footer-inner">
+      <p>© <span id="year">2026</span> HazeNoTea. HNT / 作品索引.</p>
+      <a href="../index.html#top">回到首页 <span aria-hidden="true">↑</span></a>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js" defer></script>
+</body>
+</html>
