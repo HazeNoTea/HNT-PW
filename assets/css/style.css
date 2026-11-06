@@ -63,6 +63,7 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-height) + 24px);
+  overflow-x: clip;
   color-scheme: light;
 }
 
@@ -817,8 +818,8 @@ ul {
 .ticker {
   position: relative;
   z-index: 2;
-  width: calc(100% + 28px);
-  margin: 8px 0 0 -14px;
+  width: 100%;
+  margin: 8px 0 0;
   overflow: hidden;
   border-top: 1px solid rgba(41, 22, 16, 0.2);
   border-bottom: 1px solid rgba(41, 22, 16, 0.2);
@@ -2415,6 +2416,15 @@ ul {
    Animations
    ========================================================================== */
 
+@keyframes nav-panel-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
 @keyframes line-reveal {
   to {
     transform: translateY(0);
@@ -2520,7 +2530,7 @@ ul {
     top: 0;
     right: 0;
     z-index: 95;
-    display: flex;
+    display: none;
     width: min(88vw, 420px);
     height: 100dvh;
     flex-direction: column;
@@ -2530,8 +2540,7 @@ ul {
     overflow-y: auto;
     border-left: 1px solid var(--line);
     background: var(--surface);
-    transform: translateX(102%);
-    transition: transform 0.5s var(--ease-out);
+    transform: translateX(100%);
   }
 
   .site-nav > a {
@@ -2582,7 +2591,9 @@ ul {
   }
 
   .nav-open .site-nav {
+    display: flex;
     transform: translateX(0);
+    animation: nav-panel-in 0.5s var(--ease-out);
   }
 
   .nav-open .nav-backdrop {
