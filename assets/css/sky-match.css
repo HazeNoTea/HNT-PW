@@ -1,0 +1,42 @@
+/* ==========================================================================
+   Sky Match — project page
+   ========================================================================== */
+
+.post-gallery--single {
+  grid-template-columns: 1fr;
+}
+
+.post-gallery--single figure {
+  background: var(--surface-2);
+}
+
+.post-gallery--four {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.post-gallery--four figure {
+  background: var(--surface-2);
+}
+
+.post-gallery--four img {
+  width: 100%;
+  height: auto;
+}
+
+.post-note--free {
+  border-left-color: var(--live);
+}
+
+/* Keep the screenshot pairs on narrow phones; collapse only on the
+   smallest screens so the source screenshots are never upscaled. */
+@media (max-width: 720px) {
+  .post-gallery--four {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 320px) {
+  .post-gallery--four {
+    grid-template-columns: 1fr;
+  }
+}

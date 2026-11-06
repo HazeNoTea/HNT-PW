@@ -54,6 +54,9 @@
 }
 
 .post-hero {
+  /* Match the article measure so the title, cover and body share one edge. */
+  width: min(800px, calc(100% - var(--gutter) * 2));
+  margin-inline: auto;
   padding: clamp(54px, 8vw, 104px) 0 0;
 }
 
@@ -127,7 +130,7 @@
 
 .post-meta {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   margin-top: clamp(30px, 4vw, 42px);
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
@@ -157,7 +160,9 @@
 }
 
 .post-cover {
-  margin: clamp(32px, 5vw, 58px) 0 0;
+  /* Keep the cover on the same measure as .post-content, never full-bleed. */
+  width: min(800px, calc(100% - var(--gutter) * 2));
+  margin: clamp(32px, 5vw, 58px) auto 0;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 24px;

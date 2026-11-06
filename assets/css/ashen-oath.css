@@ -25,7 +25,7 @@
    -------------------------------------------------------------------------- */
 
 .ashen-activation-wrap {
-  width: min(1040px, calc(100% - var(--gutter) * 2));
+  width: min(800px, calc(100% - var(--gutter) * 2));
   margin: clamp(26px, 4vw, 42px) auto 0;
 }
 
@@ -243,7 +243,9 @@
   }
 }
 
-@media (max-width: 400px) {
+/* Keep the two-up grid until the very narrowest screens so the
+   336px-wide screenshots are never upscaled and blurred. */
+@media (max-width: 320px) {
   .post-gallery--screens {
     grid-template-columns: 1fr;
   }

@@ -19,6 +19,13 @@ HazeNoTea 的个人作品索引，收录手环 RPG、小游戏与纯前端工具
 - 封面、宣传图、游戏画面和图标均来自桌面素材目录；`标题废稿` 没有使用。
 - 教程页和作品页中的激活按钮都指向个人网站的激活页，并带正确参数。
 
+## 天空消消乐 / Sky Match
+
+- 作品页：`post/sky-match.html`
+- 素材目录：`common/post/天空消消乐/`
+- 定位：天空系列免费三消，无需购买或激活
+- 页面已保留宣传图中的声明：素材及 IP 与 AstroBox、小米及其他设备厂商无关，本作是非商业免费游戏，仅供交流学习使用
+
 ## 本地预览
 
 直接双击 `index.html`，或在该目录运行：
@@ -32,7 +39,7 @@ python -m http.server 8000
 ## 项目入口
 
 - 首页：`index.html`
-- 作品页：`post/hnt-gamebox.html`、`post/sokoban.html`、`post/sky-chess.html`、`post/sky-cards.html`、`post/ashen-oath.html`
+- 作品页：`post/hnt-gamebox.html`、`post/sokoban.html`、`post/sky-chess.html`、`post/sky-cards.html`、`post/sky-match.html`、`post/ashen-oath.html`
 - 激活教程：`post/ashen-oath-activation.html`
 - 激活页：`pages/activate/activate.html`（不放入站内导航，已设置 `noindex`）
 - 图片素材：`common/post/`
