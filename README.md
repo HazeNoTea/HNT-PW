@@ -19,6 +19,17 @@ HazeNoTea 的个人作品索引，收录手环 RPG、小游戏与纯前端工具
 - 封面、宣传图、游戏画面和图标均来自桌面素材目录；`标题废稿` 没有使用。
 - 教程页和作品页中的激活按钮都指向个人网站的激活页，并带正确参数。
 
+### 世界地图
+
+- 地图页：`post/ashen-oath-map.html`
+- 作品页入口：`post/ashen-oath.html` 的「世界地图」区块
+- 地图数据：`assets/js/ashen-maps.js`
+- 原图：`common/post/灰烬誓约/maps/map00.png` 到 `map34.png`
+- 缩略图：`common/post/灰烬誓约/maps/thumbs/`
+- 地图页支持 `?map=17` 这样的深链接
+- 只使用 `map00`–`map34`；`map35_END`、`map36_OPEN`、`map37_unnamed` 和 `_contact_sheet.png` 没有纳入
+- `map34` 的列表缩略图直接使用原图，所以之后替换时只需要覆盖 `common/post/灰烬誓约/maps/map34.png`，页面会自动读取新的尺寸
+
 ## 天空消消乐 / Sky Match
 
 - 作品页：`post/sky-match.html`
@@ -40,6 +51,7 @@ python -m http.server 8000
 
 - 首页：`index.html`
 - 作品页：`post/hnt-gamebox.html`、`post/sokoban.html`、`post/sky-chess.html`、`post/sky-cards.html`、`post/sky-match.html`、`post/ashen-oath.html`
+- 世界地图：`post/ashen-oath-map.html`
 - 激活教程：`post/ashen-oath-activation.html`
 - 激活页：`pages/activate/activate.html`（不放入站内导航，已设置 `noindex`）
 - 图片素材：`common/post/`
