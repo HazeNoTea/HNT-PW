@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <!--
   游戏激活页，不放入站内导航。
-  使用方式：activate.html?game=com.hazenotea.ashenoath.watch
+  订单模式：activate.html?game=com.hazenotea.ashenoath.watch
+  卡密模式：activate.html?game=com.hazenotea.ashenoath.watch&mode=card
   支持的游戏 ID 见下方 ALLOWED_GAMES。
 -->
 <html lang="zh-CN">
@@ -49,7 +50,7 @@
 <body>
 <div class="card">
     <h1>游戏激活</h1>
-    <div class="subtitle">输入设备码和订单号，获取解锁码</div>
+    <div id="subtitle" class="subtitle">输入设备码和订单号，获取解锁码</div>
 
     <div id="gameError" class="result error"></div>
 
@@ -57,33 +58,64 @@
         <label>设备码（手环上显示）</label>
         <input id="deviceCode" type="text" placeholder="例如 12345-67890-12345"
                autocomplete="off" maxlength="19" oninput="formatDeviceCode(this)" />
-        <div id="deviceCodeHint" class="field-hint">设备码格式不正确</div>
+        <div id="deviceCodeHint" class="field-hint">设备码输错了，请重新输入</div>
         <!-- 新码 15 位数字（5-5-5），旧码 16 位十六进制（4-4-4-4） -->
 
-        <label>爱发电订单号</label>
-        <input id="orderNo" type="text" placeholder="付款后在订单详情页查看"
-               autocomplete="off" oninput="validateOrderNo(this)" />
-        <div id="orderNoHint" class="field-hint">订单号格式不正确，应为 10-32 位数字</div>
+        <div id="orderGroup">
+            <label>爱发电订单号</label>
+            <input id="orderNo" type="text" placeholder="付款后在订单详情页查看"
+                   autocomplete="off" oninput="validateOrderNo(this)" />
+            <div id="orderNoHint" class="field-hint">订单号格式不正确，应为 10-32 位数字</div>
+        </div>
+
+        <div id="cardGroup" class="hidden">
+            <label>卡密（K 开头，16 位）</label>
+            <input id="cardKey" type="text" placeholder="例如 K123456789012345"
+                   autocomplete="off" autocapitalize="characters" spellcheck="false"
+                   maxlength="20" oninput="formatCardKey(this)" />
+            <div id="cardKeyHint" class="field-hint">卡密输错了，请重新输入</div>
+        </div>
 
         <button id="btn" onclick="activate()">获取解锁码</button>
 
         <div id="result" class="result"></div>
 
-        <div class="tips">
-            <strong>订单号在哪看？</strong><br>
-            爱发电 → 我的 → 订单 → 点击对应订单查看订单号
+        <div id="orderTips">
+            <div class="tips">
+                <strong>订单号在哪看？</strong><br>
+                爱发电 → 我的 → 订单 → 点击对应订单查看订单号
+            </div>
+            <div class="tips">
+                <strong>设备码输入错误在爱发电找人工</strong><br>
+                人工不一定随时在线，需要耐心等待
+            </div>
+            <div class="tips">
+                <strong>每分钟只能查询一次</strong><br>
+                每分钟只能查询一次，多次查询只能等待一分钟之后
+            </div>
+            <div class="tips">
+                <strong>土豆数据库随时爆炸</strong><br>
+                确认输入正确但查询失败，1分钟后重新尝试即可
+            </div>
         </div>
-        <div class="tips">
-            <strong>设备码输入错误在爱发电找人工</strong><br>
-            人工不一定随时在线，需要耐心等待
-        </div>
-        <div class="tips">
-            <strong>每分钟只能查询一次</strong><br>
-            每分钟只能查询一次，多次查询只能等待一分钟之后
-        </div>
-        <div class="tips">
-            <strong>土豆数据库随时爆炸</strong><br>
-            确认输入正确但查询失败，1分钟后重新尝试即可
+
+        <div id="cardTips" class="hidden">
+            <div class="tips">
+                <strong>卡密在哪看？</strong><br>
+                在你购买游戏的经销商处获取，K 开头的 16 位（K 也要输入）。
+            </div>
+            <div class="tips">
+                <strong>卡密不是解锁码</strong><br>
+                卡密填在网页；手环上输入的是 8 位解锁码。
+            </div>
+            <div class="tips">
+                <strong>一张卡密只能激活一台设备</strong><br>
+                设备码填错会导致卡密作废，请核对后再提交。
+            </div>
+            <div class="tips">
+                <strong>每分钟只能试一次</strong><br>
+                卡密或设备码输错，60 秒后才能重试。
+            </div>
         </div>
     </div>
 </div>
@@ -124,9 +156,11 @@ function updateCountdown() {
     }
 }
 
-// ========== 从 URL 读取 game 参数 ==========
+// ========== 从 URL 读取 game / mode 参数 ==========
 const params = new URLSearchParams(location.search);
 const GAME_ID = (params.get('game') || '').trim();
+const MODE = (params.get('mode') || 'order').trim().toLowerCase();
+const IS_CARD = MODE === 'card';
 
 window.addEventListener('DOMContentLoaded', function () {
     const formArea = document.getElementById('formArea');
@@ -144,7 +178,24 @@ window.addEventListener('DOMContentLoaded', function () {
         formArea.classList.add('hidden');
         return;
     }
+    if (MODE !== 'order' && MODE !== 'card') {
+        gameError.textContent = '激活方式参数不正确，请从游戏内提供的链接进入本页面。';
+        gameError.style.display = 'block';
+        formArea.classList.add('hidden');
+        return;
+    }
+    applyModeUI();
 });
+
+function applyModeUI() {
+    document.getElementById('subtitle').textContent = IS_CARD
+        ? '输入设备码和卡密，获取解锁码'
+        : '输入设备码和订单号，获取解锁码';
+    document.getElementById('orderGroup').classList.toggle('hidden', IS_CARD);
+    document.getElementById('cardGroup').classList.toggle('hidden', !IS_CARD);
+    document.getElementById('orderTips').classList.toggle('hidden', IS_CARD);
+    document.getElementById('cardTips').classList.toggle('hidden', !IS_CARD);
+}
 
 // ========== 设备码格式化与校验 ==========
 // v2 新码：15 位纯数字 = 14 位数据 + 1 位 Damm 校验，展示 5-5-5
@@ -161,7 +212,7 @@ const DEVICE_DAMM = [
     [9, 4, 3, 8, 6, 1, 7, 2, 0, 5],
     [2, 5, 8, 1, 4, 3, 6, 7, 9, 0],
 ];
-const DEVICE_CODE_HINT = '设备码格式不正确';
+const DEVICE_CODE_HINT = '设备码输错了，请重新输入';
 // 新码 15 位数字（5-5-5），旧码 16 位十六进制（4-4-4-4）
 
 function dammValidate(code) {
@@ -172,6 +223,53 @@ function dammValidate(code) {
         interim = DEVICE_DAMM[interim][d];
     }
     return interim === 0;
+}
+
+// ========== 卡密格式化与校验 ==========
+// 卡密：K + 15 位数字（14 位数据 + 1 位 Damm 校验），共 16 位，无连字符。
+const CARD_FULLWIDTH_MAP = {
+    '０': '0', '１': '1', '２': '2', '３': '3', '４': '4',
+    '５': '5', '６': '6', '７': '7', '８': '8', '９': '9',
+    'Ｋ': 'K', 'ｋ': 'K', '－': '-', '—': '-', '–': '-', '　': ' '
+};
+
+function normalizeCardInput(raw) {
+    let s = String(raw || '').replace(/[０-９Ｋｋ－—–　]/g, function (ch) {
+        return CARD_FULLWIDTH_MAP[ch] || ch;
+    });
+    s = s.toUpperCase().replace(/[^0-9K]/g, '');
+    return s.slice(0, 16);
+}
+
+function formatCardKey(input) {
+    const value = normalizeCardInput(input.value);
+    input.value = value;
+    const hint = document.getElementById('cardKeyHint');
+
+    if (/^K\d{15}$/.test(value)) {
+        if (dammValidate(value.slice(1))) {
+            input.classList.remove('invalid');
+            input.classList.add('valid');
+            hint.classList.remove('show');
+        } else {
+            input.classList.add('invalid');
+            input.classList.remove('valid');
+            hint.textContent = '卡密输错了，请重新输入';
+            hint.classList.add('show');
+        }
+    } else {
+        input.classList.remove('valid');
+        input.classList.remove('invalid');
+        hint.textContent = '卡密输错了，请重新输入';
+        hint.classList.remove('show');
+    }
+}
+
+function parseCardKey(raw) {
+    const value = normalizeCardInput(String(raw || '').trim());
+    if (!/^K\d{15}$/.test(value)) return null;
+    if (!dammValidate(value.slice(1))) return null;
+    return { code: value, digits: value.slice(1) };
 }
 
 function groupCode(code, size) {
@@ -233,7 +331,7 @@ function formatDeviceCode(input) {
     } else if (complete && !valid) {
         input.classList.add('invalid');
         input.classList.remove('valid');
-        hint.textContent = '新设备码校验位不正确，请核对最后一位';
+        hint.textContent = '设备码输错了，请重新输入';
         hint.classList.add('show');
     } else {
         input.classList.remove('valid');
@@ -273,18 +371,21 @@ async function activate() {
 
     const deviceCodeInput = document.getElementById('deviceCode');
     const orderNoInput = document.getElementById('orderNo');
+    const cardKeyInput = document.getElementById('cardKey');
     const deviceCodeHint = document.getElementById('deviceCodeHint');
     const orderNoHint = document.getElementById('orderNoHint');
+    const cardKeyHint = document.getElementById('cardKeyHint');
     const deviceCode = deviceCodeInput.value.trim();
-    const orderNo = orderNoInput.value.trim();
     const btn = document.getElementById('btn');
     const result = document.getElementById('result');
 
     // 重置错误样式
     deviceCodeInput.classList.remove('invalid');
     orderNoInput.classList.remove('invalid');
+    cardKeyInput.classList.remove('invalid', 'valid');
     deviceCodeHint.classList.remove('show');
     orderNoHint.classList.remove('show');
+    cardKeyHint.classList.remove('show');
 
     // ---- 设备码校验（15 位新码 / 16 位旧码） ----
     if (!deviceCode) {
@@ -297,22 +398,42 @@ async function activate() {
         deviceCodeInput.classList.add('invalid');
         deviceCodeHint.textContent = DEVICE_CODE_HINT;
         deviceCodeHint.classList.add('show');
-        showResult('设备码错误，请仔细检查是否和手环/手表上的一致', 'error');
-        // ：新码 15 位数字，旧码 16 位十六进制
+        showResult('设备码输错了，请和手环/手表上核对后重新输入', 'error');
         return;
     }
 
-    // ---- 订单号校验 ----
-    if (!orderNo) {
-        showResult('请输入订单号', 'error');
-        orderNoInput.classList.add('invalid');
-        return;
-    }
-    if (!/^\d{10,32}$/.test(orderNo)) {
-        orderNoInput.classList.add('invalid');
-        orderNoHint.classList.add('show');
-        showResult('订单号格式不正确，应为 10-32 位数字', 'error');
-        return;
+    // ---- 凭证校验：订单号 / 卡密 ----
+    let credential;
+    if (IS_CARD) {
+        const cardRaw = cardKeyInput.value.trim();
+        if (!cardRaw) {
+            showResult('请输入卡密', 'error');
+            cardKeyInput.classList.add('invalid');
+            return;
+        }
+        const cardParsed = parseCardKey(cardRaw);
+        if (!cardParsed) {
+            cardKeyInput.classList.add('invalid');
+            cardKeyHint.textContent = '卡密输错了，请重新输入';
+            cardKeyHint.classList.add('show');
+            showResult('卡密输错了，请重新输入', 'error');
+            return;
+        }
+        credential = { mode: 'card', card_key: cardParsed.code };
+    } else {
+        const orderNo = orderNoInput.value.trim();
+        if (!orderNo) {
+            showResult('请输入订单号', 'error');
+            orderNoInput.classList.add('invalid');
+            return;
+        }
+        if (!/^\d{10,32}$/.test(orderNo)) {
+            orderNoInput.classList.add('invalid');
+            orderNoHint.classList.add('show');
+            showResult('订单号格式不正确，应为 10-32 位数字', 'error');
+            return;
+        }
+        credential = { mode: 'order', out_trade_no: orderNo };
     }
 
     // ---- 游戏参数校验 ----
@@ -329,11 +450,10 @@ async function activate() {
         const resp = await fetch(API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
+            body: JSON.stringify(Object.assign({
                 device_code: parsed.code,
-                out_trade_no: orderNo,
                 game_id: GAME_ID
-            })
+            }, credential))
         });
 
         // 先尝试解析 JSON，无论状态码是多少
