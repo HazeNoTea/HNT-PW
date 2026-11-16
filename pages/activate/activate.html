@@ -42,6 +42,8 @@
         .field-hint { font-size: 11px; color: #ff8888; margin: -10px 0 12px 0;
             display: none; }
         .field-hint.show { display: block; }
+        .input-help { font-size: 11px; color: #999; margin: -8px 0 14px 0;
+            line-height: 1.55; }
         .tips { font-size: 12px; color: #666; margin-top: 20px; line-height: 1.7; }
         .tips strong { color: #888; }
         .hidden { display: none !important; }
@@ -55,9 +57,12 @@
     <div id="gameError" class="result error"></div>
 
     <div id="formArea">
-        <label>设备码（手环上显示）</label>
+        <label>设备码（手环上显示，可不输入“-”）</label>
         <input id="deviceCode" type="text" placeholder="例如 12345-67890-12345"
-               autocomplete="off" maxlength="19" oninput="formatDeviceCode(this)" />
+               autocomplete="off" autocapitalize="characters" spellcheck="false"
+               maxlength="24" aria-describedby="deviceCodeHelp deviceCodeHint"
+               oninput="formatDeviceCode(this)" onblur="formatDeviceCode(this, true)" />
+        <!--<div id="deviceCodeHelp" class="input-help">短横线（-）可以直接输入或粘贴，只输入数字/字母也可以；校验时会忽略它，离开输入框或提交时会自动整理格式。</div>-->
         <div id="deviceCodeHint" class="field-hint">设备码输错了，请重新输入</div>
         <!-- 新码 15 位数字（5-5-5），旧码 16 位十六进制（4-4-4-4） -->
 
@@ -167,7 +172,7 @@ window.addEventListener('DOMContentLoaded', function () {
     const gameError = document.getElementById('gameError');
 
     if (!GAME_ID) {
-        gameError.textContent = '缺少游戏参数，请从游戏内提供的链接进入本页面。';
+        gameError.textContent = '链接错误，可能是链接没有复制全';
         gameError.style.display = 'block';
         formArea.classList.add('hidden');
         return;
@@ -179,7 +184,7 @@ window.addEventListener('DOMContentLoaded', function () {
         return;
     }
     if (MODE !== 'order' && MODE !== 'card') {
-        gameError.textContent = '激活方式参数不正确，请从游戏内提供的链接进入本页面。';
+        gameError.textContent = '激活方式参数不正确';
         gameError.style.display = 'block';
         formArea.classList.add('hidden');
         return;
@@ -299,36 +304,55 @@ function parseDeviceCode(raw) {
 }
 
 /**
- * 自动格式化设备码：
- *  - 转大写、只保留 0-9/A-F
- *  - 完整的新码（15 位数字）→ 5-5-5
- *  - 完整的旧码（16 位 hex）→ 4-4-4-4
- *  - 输入过程中不强行插连字符，避免 15/16 位判断来回跳
+ * 允许玩家按手环上的样子输入连字符。
+ * 输入过程中保留 "-"，只做大写和字符清理；
+ * 失焦或提交时再把完整设备码整理成 5-5-5 / 4-4-4-4。
  */
-function formatDeviceCode(input) {
-    const raw = input.value.toUpperCase().replace(/[^0-9A-F]/g, '').slice(0, 16);
-    let formatted = raw;
-    let complete = false;
-    let valid = false;
+function normalizeDeviceDisplay(value) {
+    let source = String(value || '')
+        .toUpperCase()
+        .replace(/[－—–\s]/g, '-')
+        .replace(/[^0-9A-F-]/g, '')
+        .replace(/-{2,}/g, '-');
 
-    if (/^\d{15}$/.test(raw)) {
-        complete = true;
-        valid = dammValidate(raw);
-        formatted = groupCode(raw, 5);
-    } else if (/^[0-9A-F]{16}$/.test(raw)) {
-        complete = true;
-        valid = true;
-        formatted = groupCode(raw, 4);
+    let output = '';
+    let dashes = 0;
+
+    for (let i = 0; i < source.length; i += 1) {
+        const ch = source[i];
+        if (ch === '-') {
+            // 最多保留 3 个分隔符，避免额外连字符挤掉数字
+            if (dashes >= 3 || output.length === 0) continue;
+            dashes += 1;
+            output += ch;
+        } else {
+            output += ch;
+        }
     }
 
-    input.value = formatted;
+    return output.slice(0, 19);
+}
+
+function formatDeviceCode(input, finalize) {
+    const display = normalizeDeviceDisplay(input.value);
+    const compact = display.replace(/-/g, '');
+    const isNewCode = /^\d{15}$/.test(compact);
+    const isOldCode = /^[0-9A-F]{16}$/.test(compact);
+    const complete = isNewCode || isOldCode;
+
+    let nextValue = display;
+    if (finalize && complete) {
+        nextValue = groupCode(compact, isNewCode ? 5 : 4);
+    }
+
+    input.value = nextValue;
 
     const hint = document.getElementById('deviceCodeHint');
-    if (complete && valid) {
+    if (complete && (!isNewCode || dammValidate(compact))) {
         input.classList.remove('invalid');
         input.classList.add('valid');
         hint.classList.remove('show');
-    } else if (complete && !valid) {
+    } else if (complete) {
         input.classList.add('invalid');
         input.classList.remove('valid');
         hint.textContent = '设备码输错了，请重新输入';
@@ -375,6 +399,7 @@ async function activate() {
     const deviceCodeHint = document.getElementById('deviceCodeHint');
     const orderNoHint = document.getElementById('orderNoHint');
     const cardKeyHint = document.getElementById('cardKeyHint');
+    formatDeviceCode(deviceCodeInput, true);
     const deviceCode = deviceCodeInput.value.trim();
     const btn = document.getElementById('btn');
     const result = document.getElementById('result');
